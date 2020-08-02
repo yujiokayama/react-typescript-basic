@@ -27,10 +27,10 @@ function App() {
   const increment = () => dispatch(incrementCounter(1));
   const decrement = () => dispatch(decrementCounter(1));
 
-  // マウント後に実行したい処理
+  // after mounted
   React.useEffect(() => {
     dispatch(fetchAPI());
-  }, []);
+  });
 
   return (
     <div className="App">
@@ -43,6 +43,9 @@ function App() {
           </nav>
         </header>
         {count}
+        {list.map((v: any) => (
+          <li key={v.id}>{v.id}{v.name}{v.age}</li>
+        ))}
         <button onClick={increment}>増やす</button>
         <button onClick={decrement}>減らす</button>
         <Switch>
