@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from './stores/rootReducer';
 
-import Top from './pages/Top';
-import About from './pages/About';
-import User from './pages/User';
+import Top from './pages/top';
+import About from './pages/about';
+import User from './pages/user';
+import TypeScriptBasic from './pages/typescript-basic';
 
 import {
   incrementCounter,
@@ -29,7 +30,7 @@ function App() {
 
   // after mounted
   React.useEffect(() => {
-    dispatch(fetchAPI());
+    // dispatch(fetchAPI());
   });
 
   return (
@@ -40,11 +41,16 @@ function App() {
             <Link to="/">index</Link>
             <Link to="/about">about</Link>
             <Link to={`/user/${randumNum(1, 10)}`}>user</Link>
+            <Link to={`/typescript-basic`}>TyepScriptの基本</Link>
           </nav>
         </header>
         {count}
         {list.map((v: any) => (
-          <li key={v.id}>{v.id}{v.name}{v.age}</li>
+          <li key={v.id}>
+            {v.id}
+            {v.name}
+            {v.age}
+          </li>
         ))}
         <button onClick={increment}>増やす</button>
         <button onClick={decrement}>減らす</button>
@@ -52,6 +58,7 @@ function App() {
           <Route path="/" exact children={<Top />} />
           <Route path="/about" children={<About />} />
           <Route path="/user/:id" children={<User />} />
+          <Route path="/typescript-basic" children={<TypeScriptBasic />} />
         </Switch>
       </BrowserRouter>
     </div>
