@@ -36,15 +36,47 @@ function App() {
   });
 
   return (
-    <div className="App">
+
+    <div className="container mx-auto">
       <BrowserRouter>
         <header>
           <nav>
-            <Link to="/">index</Link>
-            <Link to="/about">about</Link>
-            <Link to={`/user/${randumNum(1, 10)}`}>user</Link>
-            <Link to={`/typescript-basic`}>TyepScriptの基本</Link>
-            <Link to={`/fetch-csv`}>CSVファイルを取得する</Link>
+            <ul className="flex">
+              <li className="mr-6">
+                <Link className="text-blue-500 hover:text-blue-800" to="/">
+                  index
+                </Link>
+              </li>
+              <li className="mr-6">
+                <Link className="text-blue-500 hover:text-blue-800" to="/about">
+                  about
+                </Link>
+              </li>
+              <li className="mr-6">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to={`/user/${randumNum(1, 10)}`}
+                >
+                  user
+                </Link>
+              </li>
+              <li className="mr-6">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to={`/typescript-basic`}
+                >
+                  TyepScriptの基本
+                </Link>
+              </li>
+              <li className="mr-6">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to={`/fetch-csv`}
+                >
+                  CSVファイルを取得する
+                </Link>
+              </li>
+            </ul>
           </nav>
         </header>
         {count}
