@@ -8,7 +8,6 @@ import Top from "./pages/top";
 import User from "./pages/user";
 import TypeScriptBasic from "./pages/typescript-basic";
 import ReactBasic from "./pages/react-basic";
-import FetchCSV from "./pages/fetch-csv";
 
 function App() {
   const randumNum = (min: number, max: number): number => {
@@ -31,7 +30,7 @@ function App() {
                   className="text-blue-500 hover:text-blue-800"
                   to={`/user/${randumNum(1, 10)}`}
                 >
-                  user
+                  動的ルーティングのテスト
                 </Link>
               </li>
               <li className="mr-6">
@@ -50,14 +49,6 @@ function App() {
                   TyepScriptの基本
                 </Link>
               </li>
-              <li className="mr-6">
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to={`/fetch-csv`}
-                >
-                  CSVファイルを取得する
-                </Link>
-              </li>
             </ul>
           </nav>
         </header>
@@ -67,7 +58,6 @@ function App() {
           <Route path="/user/:id" children={<User />} />
           <Route path="/react-basic" children={<ReactBasic />} />
           <Route path="/typescript-basic" children={<TypeScriptBasic />} />
-          <Route path="/fetch-csv" children={<FetchCSV />} />
         </Switch>
       </BrowserRouter>
     </div>

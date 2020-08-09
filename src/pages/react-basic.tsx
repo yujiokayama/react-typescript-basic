@@ -134,7 +134,7 @@ function ReactBasic() {
         減らす
       </button>
       <h2 className="text-3xl mt-10">子コンポーネントにpropsを渡す</h2>
-      <ChildComponent foo="渡したよ" />
+      <ChildComponent name={'ポンタ'} age={3} />
     </React.Fragment>
   );
 }
