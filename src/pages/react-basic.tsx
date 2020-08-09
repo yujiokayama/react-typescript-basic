@@ -2,6 +2,7 @@ import * as React from "react";
 
 import classNames from "classnames";
 import ChildComponent from "../componets/ChildComponent";
+import SlotComponent from "../componets/SlotComponent";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -52,12 +53,12 @@ function ReactBasic() {
   };
 
   /**
-   * created
+   * createdのライフサイクルと同等
    */
   sayHello();
 
   /**
-   * マウント後に実行したい処理
+   * mountedのライフサイクルと同等
    */
   React.useEffect(() => {
     console.log("is mounted!");
@@ -135,6 +136,12 @@ function ReactBasic() {
       </button>
       <h2 className="text-3xl mt-10">子コンポーネントにpropsを渡す</h2>
       <ChildComponent name={'ポンタ'} age={3} />
+      
+      <h2 className="text-3xl mt-10">コンテンツの差込(slot)</h2>
+      <SlotComponent>
+        <p>slot</p>
+      </SlotComponent>
+  
     </React.Fragment>
   );
 }
