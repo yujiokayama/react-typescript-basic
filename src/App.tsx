@@ -1,42 +1,21 @@
-import React from 'react';
-import './App.css';
-import './tailwind.output.css';
-import './assets/scss/index.scss';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import React from "react";
+import "./App.css";
+import "./tailwind.output.css";
+import "./assets/scss/index.scss";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { RootState } from './stores/rootReducer';
-
-import Top from './pages/top';
-import About from './pages/about';
-import User from './pages/user';
-import TypeScriptBasic from './pages/typescript-basic';
-import FetchCSV from './pages/fetch-csv';
-
-import {
-  incrementCounter,
-  decrementCounter,
-  fetchAPI
-} from './stores/modules/Counter';
+import Top from "./pages/top";
+import User from "./pages/user";
+import TypeScriptBasic from "./pages/typescript-basic";
+import ReactBasic from "./pages/react-basic";
+import FetchCSV from "./pages/fetch-csv";
 
 function App() {
   const randumNum = (min: number, max: number): number => {
     return Math.floor(Math.random() * 10);
   };
 
-  const { count, list } = useSelector((state: RootState) => state.Counter);
-  const dispatch = useDispatch();
-  const increment = () => dispatch(incrementCounter(1));
-  const decrement = () => dispatch(decrementCounter(1));
-
-  // after mounted
-  React.useEffect(() => {
-    // dispatch(fetchAPI());
-  });
-
   return (
-
     <div className="container mx-auto">
       <BrowserRouter>
         <header>
@@ -48,16 +27,19 @@ function App() {
                 </Link>
               </li>
               <li className="mr-6">
-                <Link className="text-blue-500 hover:text-blue-800" to="/about">
-                  about
-                </Link>
-              </li>
-              <li className="mr-6">
                 <Link
                   className="text-blue-500 hover:text-blue-800"
                   to={`/user/${randumNum(1, 10)}`}
                 >
                   user
+                </Link>
+              </li>
+              <li className="mr-6">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to={`/react-basic`}
+                >
+                  Reactの基本
                 </Link>
               </li>
               <li className="mr-6">
@@ -79,20 +61,11 @@ function App() {
             </ul>
           </nav>
         </header>
-        {count}
-        {/* {list.map((v: any) => (
-          <li key={v.id}>
-            {v.id}
-            {v.name}
-            {v.age}
-          </li>
-        ))} */}
-        <button onClick={increment}>増やす</button>
-        <button onClick={decrement}>減らす</button>
+
         <Switch>
           <Route path="/" exact children={<Top />} />
-          <Route path="/about" children={<About />} />
           <Route path="/user/:id" children={<User />} />
+          <Route path="/react-basic" children={<ReactBasic />} />
           <Route path="/typescript-basic" children={<TypeScriptBasic />} />
           <Route path="/fetch-csv" children={<FetchCSV />} />
         </Switch>
