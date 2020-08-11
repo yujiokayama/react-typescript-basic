@@ -8,11 +8,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../stores/rootReducer";
 
-import {
-  incrementCounter,
-  decrementCounter,
-  fetchAPI,
-} from "../stores/modules/Counter";
+import { incrementCounter, decrementCounter } from "../stores/modules/Counter";
 
 function ReactBasic() {
   /**
@@ -72,9 +68,6 @@ function ReactBasic() {
   const dispatch = useDispatch();
   const increment = () => dispatch(incrementCounter(1));
   const decrement = () => dispatch(decrementCounter(1));
-  React.useEffect(() => {
-    // dispatch(fetchAPI());
-  }, []);
 
   return (
     // React.Fragmentでルート要素を返却する
@@ -115,13 +108,6 @@ function ReactBasic() {
 
       <h2 className="text-3xl mt-10">Reduxを使用したステート管理</h2>
       {count}
-      {/* {list.map((v: any) => (
-          <li key={v.id}>
-            {v.id}
-            {v.name}
-            {v.age}
-          </li>
-        ))} */}
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={increment}
@@ -135,13 +121,12 @@ function ReactBasic() {
         減らす
       </button>
       <h2 className="text-3xl mt-10">子コンポーネントにpropsを渡す</h2>
-      <ChildComponent name={'ポンタ'} age={3} />
-      
+      <ChildComponent name={"ポンタ"} age={3} />
+
       <h2 className="text-3xl mt-10">コンテンツの差込(slot)</h2>
       <SlotComponent>
         <p>slot</p>
       </SlotComponent>
-  
     </React.Fragment>
   );
 }

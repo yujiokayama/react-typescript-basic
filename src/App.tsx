@@ -8,6 +8,8 @@ import Top from "./pages/top";
 import User from "./pages/user";
 import TypeScriptBasic from "./pages/typescript-basic";
 import ReactBasic from "./pages/react-basic";
+import TestCrud from "./pages/test-crud";
+
 
 function App() {
   const randumNum = (min: number, max: number): number => {
@@ -49,6 +51,14 @@ function App() {
                   TyepScriptの基本
                 </Link>
               </li>
+              <li className="mr-6">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to={`/test-crud`}
+                >
+                  REST APIをCRUD操作する
+                </Link>
+              </li>
             </ul>
           </nav>
         </header>
@@ -58,6 +68,7 @@ function App() {
           <Route path="/user/:id" children={<User />} />
           <Route path="/react-basic" children={<ReactBasic />} />
           <Route path="/typescript-basic" children={<TypeScriptBasic />} />
+          <Route path="/test-crud" children={<TestCrud />} />
         </Switch>
       </BrowserRouter>
     </div>

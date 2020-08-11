@@ -1,50 +1,94 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+
+type Member = {
+  id: any;
+  name: string;
+  age: number;
+};
+
+type newMember = {
+  name: string | null;
+  age: number | null;
+};
 
 type State = {
-  list: any;
+  newMember: newMember;
+  member: Member[];
 };
 
 const initialState: State = {
-  list: []
+  newMember: {
+    name: null,
+    age: null,
+  },
+  member: [],
 };
 
-export const fetchCSV = createAsyncThunk(
-  'modules/fetchCSV',
-  async (filePath: string, thunk): Promise<void> => {
-    const req = new XMLHttpRequest();
-    req.open('get', filePath, true);
-    req.send(null);
-
-    req.onload = () => {
-      convertCSVtoArray(req.responseText);
-    };
+export const fetchMembers = createAsyncThunk(
+  "modules/fetchMembers",
+  async (arg, thunk) => {
+    const res = await fetch(
+      "https://test-restapi-654bc.firebaseio.com/members.json/"
+    );
+    if (res.ok) {
+      return await res.json();
+    }
+    throw new Error("fetch error");
   }
 );
 
-const convertCSVtoArray = (str: string) => {
-  let result = [];
-  let tmp = str.split('\n');
-  for (var i = 0; i < tmp.length; ++i) {
-    result[i] = tmp[i].split(',');
+/**
+ * POST
+ */
+export const registMember = createAsyncThunk(
+  "modules/registMember",
+  async (arg, thunk) => {
+    const obj = {
+      id: 101,
+      name: "test",
+      age: 10,
+    };
+    const method = "POST";
+    const body = JSON.stringify(obj);
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    const response = await fetch(
+      "https://test-restapi-654bc.firebaseio.com/members.json/",
+      {
+        method,
+        headers,
+        body,
+      }
+    );
+    if (response.ok) {
+      return await response.json();
+    }
+    throw new Error("fetch error");
   }
-  console.log(result)
-  return result;
-};
+);
 
-const FetchModule = createSlice({
-  name: 'fetch',
+const MemberListModule = createSlice({
+  name: "member",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCSV.fulfilled, (state, action) => {
+    builder.addCase(registMember.fulfilled, (state, action) => {
       return {
         ...state,
-        list: action.payload
+        member: action.payload,
       };
     });
-  }
+    builder.addCase(fetchMembers.fulfilled, (state, action) => {
+      return {
+        ...state,
+        member: action.payload,
+      };
+    });
+  },
 });
 
-// export const {} = counterModule.actions;
+// export const {} = FetchModule.actions;
 
-export default FetchModule;
+export default MemberListModule;
