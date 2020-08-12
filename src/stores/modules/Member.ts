@@ -8,7 +8,7 @@ type Member = {
 
 type newMember = {
   name: string | null;
-  age: number | null;
+  age: string | null;
 };
 
 type State = {
@@ -42,12 +42,8 @@ export const fetchMembers = createAsyncThunk(
  */
 export const registMember = createAsyncThunk(
   "modules/registMember",
-  async (arg, thunk) => {
-    const obj = {
-      id: 101,
-      name: "test",
-      age: 10,
-    };
+  async (args: newMember, thunk) => {
+    const obj = args;
     const method = "POST";
     const body = JSON.stringify(obj);
     const headers = {
@@ -72,12 +68,19 @@ export const registMember = createAsyncThunk(
 const MemberListModule = createSlice({
   name: "member",
   initialState,
-  reducers: {},
+  reducers: {
+    setMemberName: (state: State, action: PayloadAction<string>) => {
+      state.newMember.name = action.payload;
+    },
+    setMemberAge: (state, action: PayloadAction<string>) => {
+      state.newMember.age = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(registMember.fulfilled, (state, action) => {
       return {
         ...state,
-        member: action.payload,
+        newMember: action.payload,
       };
     });
     builder.addCase(fetchMembers.fulfilled, (state, action) => {
@@ -89,6 +92,6 @@ const MemberListModule = createSlice({
   },
 });
 
-// export const {} = FetchModule.actions;
+export const { setMemberName, setMemberAge } = MemberListModule.actions;
 
 export default MemberListModule;
