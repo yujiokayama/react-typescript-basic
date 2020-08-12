@@ -15,6 +15,8 @@ import {
   deleteMember
 } from '../stores/modules/Member';
 
+import EditModal from '../components/EditModal';
+
 function TestCrud() {
   /**
    * class
@@ -59,9 +61,6 @@ function TestCrud() {
     (document.getElementById('MEMBER_AGE') as HTMLInputElement).value = '';
   };
 
-  /**
-   * created
-   */
   React.useEffect(() => {
     dispatch(fetchMembers());
   }, []);
@@ -104,11 +103,11 @@ function TestCrud() {
           </button>
         </div>
       </div>
-
+      <EditModal name="hoge" age={30} />
       <h2 className="text-3xl mb-5">READ(GET) / UPDATE(PUT) / DELETE</h2>
       <ul>
         {Object.entries(member).map((member) => (
-          <li key={member[1].name} className="mb-3">
+          <li key={member[0]} className="mb-3">
             <ul className="flex">
               <li className="ml-3">name: {member[1].name}</li>
               <li className="ml-3">age: {member[1].age}</li>

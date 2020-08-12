@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import classNames from "classnames";
-import ChildComponent from "../componets/ChildComponent";
-import SlotComponent from "../componets/SlotComponent";
+import ChildComponent from "../components/ChildComponent";
+import SlotComponent from "../components/SlotComponent";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ function ReactBasic() {
   const handleClick = () => setCount(counter + 1);
 
   /**
-   * フォームの双方向バインディング
+   * フォームの双方向バインディング(useStateを使用したステート管理)
    */
   const [name, setName] = React.useState("");
   const handleInput = (e: any) => setName(e.target.value);
