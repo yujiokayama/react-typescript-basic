@@ -1,24 +1,26 @@
-import React from "react";
-import "../App.css";
+import * as React from 'react';
+import '../App.css';
 
-import classNames from "classnames";
+import classNames from 'classnames';
 
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { RootState } from "../stores/rootReducer";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { RootState } from '../stores/rootReducer';
 import {
   setMemberName,
   setMemberAge,
   fetchMembers,
+  editMember,
   registMember,
-} from "../stores/modules/Member";
+  deleteMember
+} from '../stores/modules/Member';
 
 function TestCrud() {
   /**
    * class
    */
   const buttonClass = classNames({
-    "btn-primary": true,
+    'btn-primary': true
   });
 
   /**
@@ -27,7 +29,7 @@ function TestCrud() {
   const isMemberValid = false;
 
   /**
-   * redux state
+   * redux
    */
 
   const { member, newMember } = useSelector(
@@ -35,9 +37,26 @@ function TestCrud() {
   );
 
   const dispatch = useDispatch();
-  const handleRegist = async () => {
+
+  const handleRegist = async (): Promise<void> => {
     await dispatch(registMember(newMember));
     await dispatch(fetchMembers());
+    clearRegistMember();
+  };
+
+  const handleEdit = async (id: string, content: any): Promise<void> => {
+    await dispatch(editMember({ id, content }));
+    await dispatch(fetchMembers());
+  };
+
+  const handleDelete = async (id: string): Promise<void> => {
+    await dispatch(deleteMember(id));
+    await dispatch(fetchMembers());
+  };
+
+  const clearRegistMember = (): void => {
+    (document.getElementById('MEMBER_NAME') as HTMLInputElement).value = '';
+    (document.getElementById('MEMBER_AGE') as HTMLInputElement).value = '';
   };
 
   /**
@@ -59,7 +78,7 @@ function TestCrud() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name=""
-            id=""
+            id="MEMBER_NAME"
             placeholder="name"
           />
         </div>
@@ -70,7 +89,7 @@ function TestCrud() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name=""
-            id=""
+            id="MEMBER_AGE"
             placeholder="age"
           />
         </div>
@@ -86,14 +105,37 @@ function TestCrud() {
         </div>
       </div>
 
-      <h2 className="text-3xl mb-5">READ(GET)</h2>
-      {Object.values(member).map((member) => (
-        <li key={member.name}>
-          {member.id}
-          {member.name}
-          {member.age}
-        </li>
-      ))}
+      <h2 className="text-3xl mb-5">READ(GET) / UPDATE(PUT) / DELETE</h2>
+      <ul>
+        {Object.entries(member).map((member) => (
+          <li key={member[1].name} className="mb-3">
+            <ul className="flex">
+              <li className="ml-3">name: {member[1].name}</li>
+              <li className="ml-3">age: {member[1].age}</li>
+              <li className="ml-3">
+                <button
+                  onClick={() => {
+                    handleEdit(member[0], { name: 'replace', age: 999 });
+                  }}
+                  className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded-full"
+                >
+                  編集
+                </button>
+              </li>
+              <li className="ml-3">
+                <button
+                  onClick={() => {
+                    handleDelete(member[0]);
+                  }}
+                  className="bg-red-500 hover:bg-red-700 text-white text-xs py-1 px-2 rounded-full"
+                >
+                  削除
+                </button>
+              </li>
+            </ul>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

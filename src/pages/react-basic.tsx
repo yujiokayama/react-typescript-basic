@@ -34,7 +34,7 @@ function ReactBasic() {
   const handleInput = (e: any) => setName(e.target.value);
 
   /**
-   * コンポーネントメソッド
+   * コンポーネントメソッド(methods)
    */
   const sayHello = () => {
     console.log(`Hello, ${name}!`);
