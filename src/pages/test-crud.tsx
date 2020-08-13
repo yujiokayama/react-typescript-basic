@@ -1,28 +1,30 @@
-import * as React from "react";
-import "../App.css";
+import * as React from 'react';
+import '../App.css';
 
-import classNames from "classnames";
+import classNames from 'classnames';
 
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { RootState } from "../stores/rootReducer";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { RootState } from '../stores/rootReducer';
+
 import {
   setMemberName,
   setMemberAge,
+  getEditTarget,
   fetchMembers,
   editMember,
   registMember,
-  deleteMember,
-} from "../stores/modules/Member";
+  deleteMember
+} from '../stores/modules/Member';
 
-import EditModal from "../components/EditModal";
+import EditModal from '../components/EditModal';
 
 function TestCrud() {
   /**
    * class
    */
   const buttonClass = classNames({
-    "btn-primary": true,
+    'btn-primary': true
   });
 
   /**
@@ -35,9 +37,9 @@ function TestCrud() {
    * redux state
    */
 
-  const { member, newMember } = useSelector(
-    (state: RootState) => state.MemberList
-  );
+  const { member, newMember } = useSelector((state: RootState) => {
+    return state.MemberList;
+  });
 
   const dispatch = useDispatch();
 
@@ -67,13 +69,9 @@ function TestCrud() {
     await dispatch(fetchMembers());
   };
 
-  /**
-   * ref
-   */
-
   const clearRegistMember = (): void => {
-    (document.getElementById("MEMBER_NAME") as HTMLInputElement).value = "";
-    (document.getElementById("MEMBER_AGE") as HTMLInputElement).value = "";
+    (document.getElementById('MEMBER_NAME') as HTMLInputElement).value = '';
+    (document.getElementById('MEMBER_AGE') as HTMLInputElement).value = '';
   };
 
   React.useEffect(() => {
@@ -117,8 +115,7 @@ function TestCrud() {
           </button>
         </div>
       </div>
-      {/* edit modal */}
-      {/* {isEdit && <EditModal editTarget={} />} */}
+      <EditModal />
       <h2 className="text-3xl mb-5">READ(GET) / UPDATE(PUT) / DELETE</h2>
       <ul>
         {Object.entries(member).map((member) => (
@@ -127,7 +124,18 @@ function TestCrud() {
               <li className="ml-3">name: {member[1].name}</li>
               <li className="ml-3">age: {member[1].age}</li>
               <li className="ml-3">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded-full">
+                <button
+                  onClick={() => {
+                    dispatch(
+                      getEditTarget({
+                        key: member[0],
+                        name: member[1].name,
+                        age: member[1].age
+                      })
+                    );
+                  }}
+                  className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded-full"
+                >
                   編集
                 </button>
               </li>
