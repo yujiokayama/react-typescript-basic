@@ -26,12 +26,13 @@ function TestCrud() {
   });
 
   /**
-   * valid
+   * state
    */
-  const isMemberValid = false;
+  const [isEdit, setEdit] = React.useState(false);
+  const toggleEdit = () => setEdit(isEdit === true ? false : true);
 
   /**
-   * redux
+   * redux state
    */
 
   const { member, newMember } = useSelector(
@@ -40,21 +41,35 @@ function TestCrud() {
 
   const dispatch = useDispatch();
 
+  /**
+   * POST
+   */
   const handleRegist = async (): Promise<void> => {
     await dispatch(registMember(newMember));
     await dispatch(fetchMembers());
     clearRegistMember();
   };
 
+  /**
+   * PATCH
+   */
   const handleEdit = async (id: string, content: any): Promise<void> => {
     await dispatch(editMember({ id, content }));
     await dispatch(fetchMembers());
+    toggleEdit();
   };
 
+  /**
+   * DELETE
+   */
   const handleDelete = async (id: string): Promise<void> => {
     await dispatch(deleteMember(id));
     await dispatch(fetchMembers());
   };
+
+  /**
+   * ref
+   */
 
   const clearRegistMember = (): void => {
     (document.getElementById('MEMBER_NAME') as HTMLInputElement).value = '';
@@ -97,13 +112,13 @@ function TestCrud() {
           <button
             onClick={handleRegist}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            disabled={isMemberValid}
           >
             登録
           </button>
         </div>
       </div>
-      <EditModal name="hoge" age={30} />
+      {/* edit modal */}
+      {isEdit && <EditModal name="hoge" age={30} />}
       <h2 className="text-3xl mb-5">READ(GET) / UPDATE(PUT) / DELETE</h2>
       <ul>
         {Object.entries(member).map((member) => (
@@ -114,7 +129,7 @@ function TestCrud() {
               <li className="ml-3">
                 <button
                   onClick={() => {
-                    handleEdit(member[0], { name: 'replace', age: 999 });
+                    handleEdit(member[0], { name: '名前が更新された' });
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded-full"
                 >

@@ -29,9 +29,12 @@ const initialState: State = {
   member: []
 };
 
+/**
+ * GET
+ */
 export const fetchMembers = createAsyncThunk(
   'modules/fetchMembers',
-  async (arg, thunk) => {
+  async (_, thunk) => {
     const res = await fetch(
       'https://test-restapi-654bc.firebaseio.com/members.json/'
     );
@@ -71,12 +74,12 @@ export const registMember = createAsyncThunk(
 );
 
 /**
- * PUT
+ * PATCH
  */
 export const editMember = createAsyncThunk(
   'modules/editMember',
   async ({ id, content }: editMember, thunk) => {
-    const method = 'PUT';
+    const method = 'PATCH';
     const body = JSON.stringify(content);
     const headers = {
       Accept: 'application/json',
@@ -111,7 +114,7 @@ export const deleteMember = createAsyncThunk(
       }
     );
     if (response.ok) {
-      return await response.json();
+      return;
     } else {
       throw new Error('deletion failed');
     }
@@ -142,18 +145,16 @@ const MemberListModule = createSlice({
         member: action.payload
       };
     });
-    builder.addCase(editMember.fulfilled, (state, action) => {
-      return {
-        ...state,
-        editMember: action.payload
-      };
-    });
-    builder.addCase(deleteMember.fulfilled, (state, action) => {
-      return {
-        ...state,
-        deleteMember: action.payload
-      };
-    });
+    // builder.addCase(editMember.fulfilled, (state, action) => {
+    //   return {
+    //     ...state
+    //   };
+    // });
+    // builder.addCase(deleteMember.fulfilled, (state, action) => {
+    //   return {
+    //     ...state
+    //   };
+    // });
   }
 });
 
