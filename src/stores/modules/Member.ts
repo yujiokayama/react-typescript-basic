@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 type Member = {
   id: any;
@@ -7,11 +7,11 @@ type Member = {
 };
 
 type newMember = {
-  name: string | null;
-  age: string | null;
+  name?: string | null;
+  age?: string | null;
 };
 
-type editMember = {
+type editMemberTypes = {
   id: string;
   content: newMember;
 };
@@ -19,29 +19,31 @@ type editMember = {
 type State = {
   newMember: newMember;
   member: Member[];
+  deletedMember: {};
 };
 
 const initialState: State = {
   newMember: {
     name: null,
-    age: null
+    age: null,
   },
-  member: []
+  member: [],
+  deletedMember: {},
 };
 
 /**
  * GET
  */
 export const fetchMembers = createAsyncThunk(
-  'modules/fetchMembers',
+  "modules/fetchMembers",
   async (_, thunk) => {
     const res = await fetch(
-      'https://test-restapi-654bc.firebaseio.com/members.json/'
+      "https://test-restapi-654bc.firebaseio.com/members.json/"
     );
     if (res.ok) {
       return await res.json();
     }
-    throw new Error('fetch error');
+    throw new Error("fetch error");
   }
 );
 
@@ -49,27 +51,27 @@ export const fetchMembers = createAsyncThunk(
  * POST
  */
 export const registMember = createAsyncThunk(
-  'modules/registMember',
+  "modules/registMember",
   async (args: newMember, thunk) => {
     const obj = args;
-    const method = 'POST';
+    const method = "POST";
     const body = JSON.stringify(obj);
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     };
     const response = await fetch(
-      'https://test-restapi-654bc.firebaseio.com/members.json/',
+      "https://test-restapi-654bc.firebaseio.com/members.json/",
       {
         method,
         headers,
-        body
+        body,
       }
     );
     if (response.ok) {
       return await response.json();
     }
-    throw new Error('registration failure');
+    throw new Error("registration failure");
   }
 );
 
@@ -77,26 +79,26 @@ export const registMember = createAsyncThunk(
  * PATCH
  */
 export const editMember = createAsyncThunk(
-  'modules/editMember',
-  async ({ id, content }: editMember, thunk) => {
-    const method = 'PATCH';
+  "modules/editMember",
+  async ({ id, content }: editMemberTypes, thunk) => {
+    const method = "PATCH";
     const body = JSON.stringify(content);
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     };
     const response = await fetch(
       `https://test-restapi-654bc.firebaseio.com/members/${id}.json`,
       {
         method,
         headers,
-        body
+        body,
       }
     );
     if (response.ok) {
       return await response.json();
     }
-    throw new Error('Could not update');
+    throw new Error("Could not update");
   }
 );
 
@@ -104,25 +106,25 @@ export const editMember = createAsyncThunk(
  * DELETE
  */
 export const deleteMember = createAsyncThunk(
-  'modules/deleteMember',
+  "modules/deleteMember",
   async (id: string, thunk) => {
-    const method = 'DELETE';
+    const method = "DELETE";
     const response = await fetch(
       `https://test-restapi-654bc.firebaseio.com/members/${id}.json`,
       {
-        method
+        method,
       }
     );
     if (response.ok) {
-      return;
+      return response.ok;
     } else {
-      throw new Error('deletion failed');
+      throw new Error("deletion failed");
     }
   }
 );
 
 const MemberListModule = createSlice({
-  name: 'member',
+  name: "member",
   initialState,
   reducers: {
     setMemberName: (state: State, action: PayloadAction<string>) => {
@@ -130,19 +132,19 @@ const MemberListModule = createSlice({
     },
     setMemberAge: (state, action: PayloadAction<string>) => {
       state.newMember.age = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registMember.fulfilled, (state, action) => {
       return {
         ...state,
-        newMember: action.payload
+        newMember: action.payload,
       };
     });
     builder.addCase(fetchMembers.fulfilled, (state, action) => {
       return {
         ...state,
-        member: action.payload
+        member: action.payload,
       };
     });
     // builder.addCase(editMember.fulfilled, (state, action) => {
@@ -150,12 +152,13 @@ const MemberListModule = createSlice({
     //     ...state
     //   };
     // });
-    // builder.addCase(deleteMember.fulfilled, (state, action) => {
-    //   return {
-    //     ...state
-    //   };
-    // });
-  }
+    builder.addCase(deleteMember.fulfilled, (state, action) => {
+      return {
+        ...state,
+        deletedMember: action.payload,
+      };
+    });
+  },
 });
 
 export const { setMemberName, setMemberAge } = MemberListModule.actions;

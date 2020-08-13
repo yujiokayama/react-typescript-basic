@@ -1,26 +1,18 @@
-import * as React from 'react';
+import * as React from "react";
+
+type EditTargetTyps = {
+  name?: string | null;
+  age?: string | null;
+};
 
 type Props = {
-  name: string;
-  age: number;
+  editTarget: EditTargetTyps;
 };
 const EditModal: React.FC<Props> = (props) => {
-  /**
-   * refs
-   */
-  const refContent1 = React.createRef<HTMLParagraphElement>();
-
-  /**
-   * mounted
-   */
-  React.useEffect(() => {
-    console.log(refContent1.current);
-  }, []);
-
   return (
     <React.Fragment>
-      <p ref={refContent1}>{props.name}</p>
-      <p>{props.age}</p>
+      <p>{props.editTarget.name}</p>
+      <p>{props.editTarget.age}</p>
     </React.Fragment>
   );
 };
