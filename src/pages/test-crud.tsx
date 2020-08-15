@@ -12,7 +12,6 @@ import {
   setMemberAge,
   getEditTarget,
   fetchMembers,
-  editMember,
   registMember,
   deleteMember
 } from '../stores/modules/Member';
@@ -50,15 +49,6 @@ function TestCrud() {
     await dispatch(registMember(newMember));
     await dispatch(fetchMembers());
     clearRegistMember();
-  };
-
-  /**
-   * PATCH
-   */
-  const handleEdit = async (args: any): Promise<void> => {
-    await dispatch(editMember(args));
-    await dispatch(fetchMembers());
-    toggleEdit();
   };
 
   /**
@@ -128,7 +118,7 @@ function TestCrud() {
                   onClick={() => {
                     dispatch(
                       getEditTarget({
-                        key: member[0],
+                        id: member[0],
                         name: member[1].name,
                         age: member[1].age
                       })

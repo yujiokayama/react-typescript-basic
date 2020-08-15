@@ -1,25 +1,20 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
-type Member = {
+export type Member = {
   id: any;
   name: string;
-  age: number;
+  age: string;
 };
 
-type NewMember = {
+export type NewMember = {
   name?: string;
   age?: string;
 };
 
-type EditTarget = {
-  key?: any;
+export type EditTarget = {
+  id?: any,
   name?: string;
   age?: string;
-};
-
-type EditMemberTypes = {
-  id?: string;
-  content?: NewMember;
 };
 
 type State = {
@@ -30,23 +25,27 @@ type State = {
 
 const initialState: State = {
   newMember: {},
-  editTarget: {},
-  member: []
+  editTarget: {
+    id: "",
+    name: "",
+    age: "",
+  },
+  member: [],
 };
 
 /**
  * GET
  */
 export const fetchMembers = createAsyncThunk(
-  'modules/fetchMembers',
+  "modules/fetchMembers",
   async (_, thunk) => {
     const res = await fetch(
-      'https://test-restapi-654bc.firebaseio.com/members.json/'
+      "https://test-restapi-654bc.firebaseio.com/members.json/"
     );
     if (res.ok) {
       return await res.json();
     }
-    throw new Error('fetch error');
+    throw new Error("fetch error");
   }
 );
 
@@ -54,27 +53,27 @@ export const fetchMembers = createAsyncThunk(
  * POST
  */
 export const registMember = createAsyncThunk(
-  'modules/registMember',
+  "modules/registMember",
   async (args: NewMember, thunk) => {
     const obj = args;
-    const method = 'POST';
+    const method = "POST";
     const body = JSON.stringify(obj);
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     };
     const response = await fetch(
-      'https://test-restapi-654bc.firebaseio.com/members.json/',
+      "https://test-restapi-654bc.firebaseio.com/members.json/",
       {
         method,
         headers,
-        body
+        body,
       }
     );
     if (response.ok) {
       return await response.json();
     }
-    throw new Error('registration failure');
+    throw new Error("registration failure");
   }
 );
 
@@ -82,26 +81,26 @@ export const registMember = createAsyncThunk(
  * PATCH
  */
 export const editMember = createAsyncThunk(
-  'modules/editMember',
-  async ({ id, content }: EditMemberTypes, thunk) => {
-    const method = 'PATCH';
-    const body = JSON.stringify(content);
+  "modules/editMember",
+  async ({ id, name, age }: EditTarget, thunk) => {
+    const method = "PATCH";
+    const body = JSON.stringify({ id, name, age });
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     };
     const response = await fetch(
       `https://test-restapi-654bc.firebaseio.com/members/${id}.json`,
       {
         method,
         headers,
-        body
+        body,
       }
     );
     if (response.ok) {
       return await response.json();
     }
-    throw new Error('Could not update');
+    throw new Error("Could not update");
   }
 );
 
@@ -109,25 +108,25 @@ export const editMember = createAsyncThunk(
  * DELETE
  */
 export const deleteMember = createAsyncThunk(
-  'modules/deleteMember',
+  "modules/deleteMember",
   async (id: string, thunk) => {
-    const method = 'DELETE';
+    const method = "DELETE";
     const response = await fetch(
       `https://test-restapi-654bc.firebaseio.com/members/${id}.json`,
       {
-        method
+        method,
       }
     );
     if (response.ok) {
       return response.json();
     } else {
-      throw new Error('deletion failed');
+      throw new Error("deletion failed");
     }
   }
 );
 
 const MemberListModule = createSlice({
-  name: 'member',
+  name: "member",
   initialState,
   reducers: {
     setMemberName: (state: State, action: PayloadAction<string>) => {
@@ -144,33 +143,28 @@ const MemberListModule = createSlice({
     },
     getEditTarget: (state: State, action: PayloadAction<object>) => {
       state.editTarget = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registMember.fulfilled, (state, action) => {
       return {
         ...state,
-        NewMember: action.payload
+        NewMember: action.payload,
       };
     });
     builder.addCase(fetchMembers.fulfilled, (state, action) => {
       return {
         ...state,
-        member: action.payload
+        member: action.payload,
       };
     });
-    // builder.addCase(editMember.fulfilled, (state, action) => {
-    //   return {
-    //     ...state
-    //   };
-    // });
-    builder.addCase(deleteMember.fulfilled, (state, action) => {
+    builder.addCase(editMember.fulfilled, (state, action) => {
       return {
         ...state,
-        deletedMember: action.payload
+        editTarget: action.payload,
       };
     });
-  }
+  },
 });
 
 export const {
@@ -178,7 +172,7 @@ export const {
   setMemberAge,
   getEditTarget,
   setEditName,
-  setEditAge
+  setEditAge,
 } = MemberListModule.actions;
 
 export default MemberListModule;
