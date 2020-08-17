@@ -1,34 +1,36 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
-type Member = {
+export type Member = {
   id: any;
   name: string;
-  age: number;
+  age: string;
 };
 
-type newMember = {
-  name?: string | null;
-  age?: string | null;
+export type NewMember = {
+  name?: string;
+  age?: string;
 };
 
-type editMemberTypes = {
-  id: string;
-  content: newMember;
+export type EditTarget = {
+  id?: any,
+  name?: string;
+  age?: string;
 };
 
 type State = {
-  newMember: newMember;
+  newMember: NewMember;
   member: Member[];
-  deletedMember: {};
+  editTarget: EditTarget;
 };
 
 const initialState: State = {
-  newMember: {
-    name: null,
-    age: null,
+  newMember: {},
+  editTarget: {
+    id: "",
+    name: "",
+    age: "",
   },
   member: [],
-  deletedMember: {},
 };
 
 /**
@@ -52,7 +54,7 @@ export const fetchMembers = createAsyncThunk(
  */
 export const registMember = createAsyncThunk(
   "modules/registMember",
-  async (args: newMember, thunk) => {
+  async (args: NewMember, thunk) => {
     const obj = args;
     const method = "POST";
     const body = JSON.stringify(obj);
@@ -80,9 +82,9 @@ export const registMember = createAsyncThunk(
  */
 export const editMember = createAsyncThunk(
   "modules/editMember",
-  async ({ id, content }: editMemberTypes, thunk) => {
+  async ({ id, name, age }: EditTarget, thunk) => {
     const method = "PATCH";
-    const body = JSON.stringify(content);
+    const body = JSON.stringify({ id, name, age });
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -116,7 +118,7 @@ export const deleteMember = createAsyncThunk(
       }
     );
     if (response.ok) {
-      return response.ok;
+      return response.json();
     } else {
       throw new Error("deletion failed");
     }
@@ -130,15 +132,24 @@ const MemberListModule = createSlice({
     setMemberName: (state: State, action: PayloadAction<string>) => {
       state.newMember.name = action.payload;
     },
+    setEditName: (state: State, action: PayloadAction<string>) => {
+      state.editTarget.name = action.payload;
+    },
     setMemberAge: (state, action: PayloadAction<string>) => {
       state.newMember.age = action.payload;
+    },
+    setEditAge: (state, action: PayloadAction<string>) => {
+      state.editTarget.age = action.payload;
+    },
+    getEditTarget: (state: State, action: PayloadAction<object>) => {
+      state.editTarget = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(registMember.fulfilled, (state, action) => {
       return {
         ...state,
-        newMember: action.payload,
+        NewMember: action.payload,
       };
     });
     builder.addCase(fetchMembers.fulfilled, (state, action) => {
@@ -147,20 +158,21 @@ const MemberListModule = createSlice({
         member: action.payload,
       };
     });
-    // builder.addCase(editMember.fulfilled, (state, action) => {
-    //   return {
-    //     ...state
-    //   };
-    // });
-    builder.addCase(deleteMember.fulfilled, (state, action) => {
+    builder.addCase(editMember.fulfilled, (state, action) => {
       return {
         ...state,
-        deletedMember: action.payload,
+        editTarget: action.payload,
       };
     });
   },
 });
 
-export const { setMemberName, setMemberAge } = MemberListModule.actions;
+export const {
+  setMemberName,
+  setMemberAge,
+  getEditTarget,
+  setEditName,
+  setEditAge,
+} = MemberListModule.actions;
 
 export default MemberListModule;

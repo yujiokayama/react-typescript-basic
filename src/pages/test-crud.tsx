@@ -6,11 +6,12 @@ import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../stores/rootReducer";
+
 import {
   setMemberName,
   setMemberAge,
+  getEditTarget,
   fetchMembers,
-  editMember,
   registMember,
   deleteMember,
 } from "../stores/modules/Member";
@@ -35,9 +36,9 @@ function TestCrud() {
    * redux state
    */
 
-  const { member, newMember } = useSelector(
-    (state: RootState) => state.MemberList
-  );
+  const { member, newMember } = useSelector((state: RootState) => {
+    return state.MemberList;
+  });
 
   const dispatch = useDispatch();
 
@@ -51,25 +52,12 @@ function TestCrud() {
   };
 
   /**
-   * PATCH
-   */
-  const handleEdit = async (args: any): Promise<void> => {
-    await dispatch(editMember(args));
-    await dispatch(fetchMembers());
-    toggleEdit();
-  };
-
-  /**
    * DELETE
    */
   const handleDelete = async (id: string): Promise<void> => {
     await dispatch(deleteMember(id));
     await dispatch(fetchMembers());
   };
-
-  /**
-   * ref
-   */
 
   const clearRegistMember = (): void => {
     (document.getElementById("MEMBER_NAME") as HTMLInputElement).value = "";
@@ -117,33 +105,45 @@ function TestCrud() {
           </button>
         </div>
       </div>
-      {/* edit modal */}
-      {/* {isEdit && <EditModal editTarget={} />} */}
+      <EditModal />
       <h2 className="text-3xl mb-5">READ(GET) / UPDATE(PUT) / DELETE</h2>
       <ul>
-        {Object.entries(member).map((member) => (
-          <li key={member[0]} className="mb-3">
-            <ul className="flex">
-              <li className="ml-3">name: {member[1].name}</li>
-              <li className="ml-3">age: {member[1].age}</li>
-              <li className="ml-3">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded-full">
-                  編集
-                </button>
-              </li>
-              <li className="ml-3">
-                <button
-                  onClick={() => {
-                    handleDelete(member[0]);
-                  }}
-                  className="bg-red-500 hover:bg-red-700 text-white text-xs py-1 px-2 rounded-full"
-                >
-                  削除
-                </button>
-              </li>
-            </ul>
-          </li>
-        ))}
+        {Object.entries(member)
+          .filter((v) => v[1])
+          .map((member) => (
+            <li key={member[0]} className="mb-3">
+              <ul className="flex">
+                <li className="ml-3">name: {member[1].name}</li>
+                <li className="ml-3">age: {member[1].age}</li>
+                <li className="ml-3">
+                  <button
+                    onClick={() => {
+                      dispatch(
+                        getEditTarget({
+                          id: member[0],
+                          name: member[1].name,
+                          age: member[1].age,
+                        })
+                      );
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded-full"
+                  >
+                    編集
+                  </button>
+                </li>
+                <li className="ml-3">
+                  <button
+                    onClick={() => {
+                      handleDelete(member[0]);
+                    }}
+                    className="bg-red-500 hover:bg-red-700 text-white text-xs py-1 px-2 rounded-full"
+                  >
+                    削除
+                  </button>
+                </li>
+              </ul>
+            </li>
+          ))}
       </ul>
     </>
   );
