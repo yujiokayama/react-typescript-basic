@@ -11,29 +11,38 @@ function TypeScriptBasic() {
   /**
    * ジェネリクス
    */
-  type Foo<S, T> = {
-    foo: S;
-    bar: T;
+  type Foo<T, S> = {
+    foo: T;
+    bar: S;
+  };
+
+  interface Hoge<T, S> {
+    obj: T;
+    array: S;
   }
 
   // 変数・定数
-  const obj: Foo<number, string> = {
+  const test: Foo<number, string> = {
     foo: 3,
     bar: "hi",
   };
 
+  const test2: Hoge<object, Array<string>> = {
+    obj: {},
+    array: ['1'],
+  };
+
   // クラス
   class Fuga<T> {
-    constructor(obj: T) {
-    }
+    constructor(obj: T) {}
   }
-  const obj1 = new Fuga<string>('foo');
-  
+  const obj1 = new Fuga<string>("foo");
+
   // 関数
   function func<T>(arg: T): T {
-    return arg
+    return arg;
   }
-  
+
   func<number>(3);
 
   return (
