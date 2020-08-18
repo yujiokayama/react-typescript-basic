@@ -2,7 +2,7 @@ import * as React from "react";
 
 import classNames from "classnames";
 
-function TypeScriptBasic() {
+const TypeScriptBasic: React.FC = () => {
   /**
    * typeとinterface
    * typeを使おうね
@@ -21,15 +21,28 @@ function TypeScriptBasic() {
     array: S;
   }
 
-  // 変数・定数
+  /**
+   * 変数・定数
+   */
+
+  // プリミティブ
+
   const test: Foo<number, string> = {
     foo: 3,
     bar: "hi",
   };
 
-  const test2: Hoge<object, Array<string>> = {
-    obj: {},
-    array: ['1'],
+  // object, array
+  type MemberObject = {
+    id: number;
+    name: string;
+  };
+  const test2: Hoge<MemberObject, Array<string | number>> = {
+    obj: {
+      id: 50,
+      name: "hoge",
+    },
+    array: ["1", 2],
   };
 
   // クラス
@@ -52,6 +65,6 @@ function TypeScriptBasic() {
       <h2 className="text-3xl">ジェネリクス</h2>
     </React.Fragment>
   );
-}
+};
 
 export default TypeScriptBasic;
