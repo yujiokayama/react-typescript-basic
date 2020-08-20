@@ -1,5 +1,4 @@
 import React from "react";
-import "../App.css";
 
 const Top: React.FC = () => {
   const testFunc = (arg: string): string => {

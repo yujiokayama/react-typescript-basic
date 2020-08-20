@@ -10,11 +10,10 @@ import TypeScriptBasic from "./pages/typescript-basic";
 import ReactBasic from "./pages/react-basic";
 import TestCrud from "./pages/test-crud";
 
-
 function App() {
-  const randumNum = (min: number, max: number): number => {
-    return Math.floor(Math.random() * 10);
-  };
+  function randumNum(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
 
   return (
     <div className="container mx-auto">
