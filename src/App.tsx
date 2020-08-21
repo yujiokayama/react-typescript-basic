@@ -9,6 +9,7 @@ import User from "./pages/user";
 import TypeScriptBasic from "./pages/typescript-basic";
 import ReactBasic from "./pages/react-basic";
 import TestCrud from "./pages/test-crud";
+import TestHooks from "./pages/test-hooks";
 
 function App() {
   function randumNum(min: number, max: number): number {
@@ -58,6 +59,14 @@ function App() {
                   REST APIをCRUD操作する
                 </Link>
               </li>
+              <li className="mr-6">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  to={`/test-hooks`}
+                >
+                  React Hooksを試す
+                </Link>
+              </li>
             </ul>
           </nav>
         </header>
@@ -68,6 +77,7 @@ function App() {
           <Route path="/react-basic" children={<ReactBasic />} />
           <Route path="/typescript-basic" children={<TypeScriptBasic />} />
           <Route path="/test-crud" children={<TestCrud />} />
+          <Route path="/test-hooks" children={<TestHooks />} />
         </Switch>
       </BrowserRouter>
     </div>
