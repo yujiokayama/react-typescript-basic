@@ -1,6 +1,4 @@
 import * as React from "react";
-import "../App.css";
-
 import classNames from "classnames";
 
 import { useSelector } from "react-redux";
