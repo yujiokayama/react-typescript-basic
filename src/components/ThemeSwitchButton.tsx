@@ -1,24 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useTheme } from "../context/TestContext";
 
 const ThemeSwitchButton: React.FC = () => {
+  const { theme, setTheme } = useTheme()!;
   return (
     <>
-      <button
-        onClick={() => {
-          alert("Light");
-        }}
-        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-      >
-        Light
-      </button>
-      <button
-        onClick={() => {
-          alert("Dark");
-        }}
-        className="bg-black hover:bg-gray-800 text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-      >
-        Dark
-      </button>
+      <div style={{ backgroundColor: theme }}>
+        <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+          <option value="white">White</option>
+          <option value="lightblue">Blue</option>
+          <option value="lightgreen">Green</option>
+        </select>
+        <span>Hello!</span>
+      </div>
     </>
   );
 };

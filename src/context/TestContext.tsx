@@ -1,45 +1,33 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-type ThemeTypes = {
-  background: string;
-  text: string;
+const defaultTheme = "white";
+
+type ThemeContextType = {
+  theme: string;
+  setTheme: (value: string) => void;
 };
 
-const themeLight: ThemeTypes = {
-  background: "#fff",
-  text: "#000",
+const ThemeContext = React.createContext<ThemeContextType | undefined>(
+  undefined
+);
+
+type Props = {
+  children: React.ReactNode;
 };
 
-const themeDark: ThemeTypes = {
-  background: "#000",
-  text: "#fff",
-};
-
-type ThemeContext = {
-  currentTheme: ThemeTypes;
-};
-
-const ThemeContext = createContext<ThemeContext>({
-  currentTheme: themeLight,
-});
-
-const ThemeProvider = (props: any) => {
-  const [currentTheme, setCurrentTheme] = useState<ThemeContext>({
-    currentTheme: themeLight,
-  });
+export const ThemeProvider = ({ children }: Props) => {
+  const [theme, setTheme] = useState(defaultTheme);
 
   useEffect(() => {
-    // setCurrentTheme({
-    //   currentTheme: themeDark,
-    // });
+    const currentTheme = "lightblue";
+    setTheme(currentTheme);
   }, []);
 
   return (
-    <ThemeContext.Provider value={currentTheme}>
-      {props.children}
-      <p>hoge</p>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
     </ThemeContext.Provider>
   );
 };
 
-export { ThemeContext, ThemeProvider };
+export const useTheme = () => React.useContext(ThemeContext);

@@ -1,33 +1,31 @@
-import * as React from 'react';
+import * as React from "react";
 
-import classNames from 'classnames';
-import ChildComponent from '../components/ChildComponent';
-import SlotComponent from '../components/SlotComponent';
+import classNames from "classnames";
+import ChildComponent from "../components/ChildComponent";
+import SlotComponent from "../components/SlotComponent";
 
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { RootState } from '../stores/rootReducer';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RootState } from "../stores/rootReducer";
 
-import { incrementCounter, decrementCounter } from '../stores/modules/Counter';
+import { incrementCounter, decrementCounter } from "../stores/modules/Counter";
 
 function ReactBasic() {
-
   /**
    * if・show
    */
-   const isActive = true
-   const isShow = true
-
+  const isActive = true;
+  const isShow = true;
 
   /**
    * 配列やオブジェクトで動的なクラスを指定
    */
   const buttonClass = classNames({
     btn: true,
-    'btn-primary': true
+    "btn-primary": true,
   });
 
-  const buttonClass2 = classNames(['hoge', 'fuga']);
+  const buttonClass2 = classNames(["hoge", "fuga"]);
 
   /**
    * useStateを使用したステート管理
@@ -38,7 +36,7 @@ function ReactBasic() {
   /**
    * フォームの双方向バインディング(useStateを使用したステート管理)
    */
-  const [name, setName] = React.useState('');
+  const [name, setName] = React.useState("");
   const handleInput = (e: any) => setName(e.target.value);
 
   /**
@@ -71,7 +69,7 @@ function ReactBasic() {
    * mountedのライフサイクルと同等
    */
   React.useEffect(() => {
-    console.log('is mounted!');
+    console.log("is mounted!");
   }, []);
 
   /**
@@ -102,10 +100,9 @@ function ReactBasic() {
         カウント:{counter}
       </button>
 
-      <h2　className="text-3xl mt-10">v-ifの代わり</h2>
+      <h2 className="text-3xl mt-10">v-ifの代わり</h2>
       {isActive && <p>v-ifの代わり</p>}
-      <p style={{ display: isShow ? 'initial' : 'none' }}>v-showの代わり</p>
-
+      <p style={{ display: isShow ? "initial" : "none" }}>v-showの代わり</p>
 
       <h2 className="text-3xl mt-10">フォームの双方向バインディング</h2>
       <p>双方向バインディング:{name}</p>
@@ -147,7 +144,7 @@ function ReactBasic() {
         減らす
       </button>
       <h2 className="text-3xl mt-10">子コンポーネントにpropsを渡す</h2>
-      <ChildComponent name={'ポンタ'} age={3} />
+      <ChildComponent name={"ポンタ"} age={3} />
 
       <h2 className="text-3xl mt-10">コンテンツの差込(slot)</h2>
       <SlotComponent>

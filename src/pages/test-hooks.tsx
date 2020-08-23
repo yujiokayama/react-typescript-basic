@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext, createContext } from "react";
-import ThemeSwitchButton from "../components/ThemeSwitchButton";
+import React, { useEffect, useState } from "react";
+import { ThemeProvider } from "../context/TestContext";
 
 const TestHooks: React.FC = () => {
   /**
@@ -21,9 +21,8 @@ const TestHooks: React.FC = () => {
 
   const refDivElement = React.createRef<HTMLDivElement>();
 
-
   return (
-    <>
+    <ThemeProvider>
       <h1 className="text-4xl">React Hooksのテスト</h1>
 
       <h2 className="text-2xl mt-5 mb-2">useEffect</h2>
@@ -38,9 +37,8 @@ const TestHooks: React.FC = () => {
       </button>
       {counter}
 
-      <h2 className="text-2xl mt-5 mb-2">テーマ切り替え</h2>
-      <ThemeSwitchButton />
-    </>
+      <h2 className="text-2xl mt-5 mb-2">Context</h2>
+    </ThemeProvider>
   );
 };
 

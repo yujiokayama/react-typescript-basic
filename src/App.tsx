@@ -3,6 +3,8 @@ import "./App.css";
 import "./tailwind.output.css";
 import "./assets/scss/index.scss";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { ThemeProvider } from "./context/TestContext";
+import ThemeSwitchButton from "./components/ThemeSwitchButton";
 
 import Top from "./pages/top";
 import User from "./pages/user";
@@ -19,66 +21,70 @@ function App() {
   return (
     <div className="container mx-auto">
       <BrowserRouter>
-        <header>
-          <nav>
-            <ul className="flex">
-              <li className="mr-6">
-                <Link className="text-blue-500 hover:text-blue-800" to="/">
-                  index
-                </Link>
-              </li>
-              <li className="mr-6">
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to={`/user/${randumNum(1, 10)}`}
-                >
-                  動的ルーティングのテスト
-                </Link>
-              </li>
-              <li className="mr-6">
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to={`/react-basic`}
-                >
-                  Reactの基本
-                </Link>
-              </li>
-              <li className="mr-6">
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to={`/typescript-basic`}
-                >
-                  TyepScriptの基本
-                </Link>
-              </li>
-              <li className="mr-6">
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to={`/test-crud`}
-                >
-                  REST APIをCRUD操作する
-                </Link>
-              </li>
-              <li className="mr-6">
-                <Link
-                  className="text-blue-500 hover:text-blue-800"
-                  to={`/test-hooks`}
-                >
-                  React Hooksを試す
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <ThemeProvider>
+          <header>
+            <nav>
+              <ul className="flex">
+                <li className="mr-6">
+                  <Link className="text-blue-500 hover:text-blue-800" to="/">
+                    index
+                  </Link>
+                </li>
+                <li className="mr-6">
+                  <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to={`/user/${randumNum(1, 10)}`}
+                  >
+                    動的ルーティングのテスト
+                  </Link>
+                </li>
+                <li className="mr-6">
+                  <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to={`/react-basic`}
+                  >
+                    Reactの基本
+                  </Link>
+                </li>
+                <li className="mr-6">
+                  <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to={`/typescript-basic`}
+                  >
+                    TyepScriptの基本
+                  </Link>
+                </li>
+                <li className="mr-6">
+                  <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to={`/test-crud`}
+                  >
+                    REST APIをCRUD操作する
+                  </Link>
+                </li>
+                <li className="mr-6">
+                  <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to={`/test-hooks`}
+                  >
+                    React Hooksを試す
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </header>
 
-        <Switch>
-          <Route path="/" exact children={<Top />} />
-          <Route path="/user/:id" children={<User />} />
-          <Route path="/react-basic" children={<ReactBasic />} />
-          <Route path="/typescript-basic" children={<TypeScriptBasic />} />
-          <Route path="/test-crud" children={<TestCrud />} />
-          <Route path="/test-hooks" children={<TestHooks />} />
-        </Switch>
+          <Switch>
+            <Route path="/" exact children={<Top />} />
+            <Route path="/user/:id" children={<User />} />
+            <Route path="/react-basic" children={<ReactBasic />} />
+            <Route path="/typescript-basic" children={<TypeScriptBasic />} />
+            <Route path="/test-crud" children={<TestCrud />} />
+            <Route path="/test-hooks" children={<TestHooks />} />
+          </Switch>
+
+          <ThemeSwitchButton />
+        </ThemeProvider>
       </BrowserRouter>
     </div>
   );

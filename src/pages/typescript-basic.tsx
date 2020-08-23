@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import classNames from "classnames";
+import ThemeSwitchButton from "../components/ThemeSwitchButton";
 
 const TypeScriptBasic: React.FC = () => {
   /**
@@ -59,11 +58,11 @@ const TypeScriptBasic: React.FC = () => {
   func<number>(3);
 
   return (
-    <React.Fragment>
+    <>
       <h1 className="text-4xl mb-5">TypeScriptBasic</h1>
 
       <h2 className="text-3xl">ジェネリクス</h2>
-    </React.Fragment>
+    </>
   );
 };
 
