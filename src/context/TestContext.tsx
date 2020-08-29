@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-const defaultTheme = "white";
+const defaultTheme: string = "white";
 
 type ThemeContextType = {
   theme: string;
