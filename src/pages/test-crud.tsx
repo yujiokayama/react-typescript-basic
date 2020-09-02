@@ -14,6 +14,8 @@ import {
   deleteMember,
 } from "../stores/modules/Member";
 
+import { fetchCSV } from "../stores/modules/FetchCSV";
+
 import EditModal from "../components/EditModal";
 
 function TestCrud() {
@@ -36,6 +38,10 @@ function TestCrud() {
 
   const { member, newMember } = useSelector((state: RootState) => {
     return state.MemberList;
+  });
+
+  const { csvFile } = useSelector((state: RootState) => {
+    return state.FetchCSV;
   });
 
   const dispatch = useDispatch();
@@ -64,6 +70,7 @@ function TestCrud() {
 
   React.useEffect(() => {
     dispatch(fetchMembers());
+    // dispatch(fetchCSV());
   }, []);
 
   return (
@@ -143,6 +150,8 @@ function TestCrud() {
             </li>
           ))}
       </ul>
+      <h2>CSVファイルを取得する</h2>
+      {csvFile}
     </>
   );
 }
