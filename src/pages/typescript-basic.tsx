@@ -1,5 +1,6 @@
 import * as React from "react";
 import ThemeSwitchButton from "../components/ThemeSwitchButton";
+import { type } from "os";
 
 const TypeScriptBasic: React.FC = () => {
   /**
@@ -8,13 +9,16 @@ const TypeScriptBasic: React.FC = () => {
    */
 
   /**
-   * ジェネリクス
+   * type
    */
   type Foo<T, S> = {
     foo: T;
     bar: S;
   };
 
+  /**
+   * interface
+   */
   interface Hoge<T, S> {
     obj: T;
     array: S;
@@ -23,8 +27,6 @@ const TypeScriptBasic: React.FC = () => {
   /**
    * 変数・定数
    */
-
-  // プリミティブ
 
   const test: Foo<number, string> = {
     foo: 3,
@@ -36,12 +38,27 @@ const TypeScriptBasic: React.FC = () => {
     id: number;
     name: string;
   };
-  const test2: Hoge<MemberObject, Array<string | number>> = {
+
+  type ItemObject = {
+    name: string;
+    amount: number;
+  };
+
+  const test2: Hoge<MemberObject, Array<ItemObject>> = {
     obj: {
       id: 50,
       name: "hoge",
     },
-    array: ["1", 2],
+    array: [
+      {
+        name: "けしごむ",
+        amount: 5,
+      },
+      {
+        name: "えんぴつ",
+        amount: 1,
+      },
+    ],
   };
 
   // クラス
