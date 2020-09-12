@@ -12,10 +12,27 @@ import { incrementCounter, decrementCounter } from "../stores/modules/Counter";
 
 function ReactBasic() {
   /**
-   * if・show
+   * 条件つきレンダー
    */
+  const isLogind = undefined;
   const isActive = true;
   const isShow = true;
+
+  const UserGreeting = () => {
+    return (
+      <div>
+        <h1>Welcome back!</h1>
+      </div>
+    );
+  };
+
+  const GuestGreeting = () => {
+    return (
+      <div>
+        <h1>Please sign up.</h1>
+      </div>
+    );
+  };
 
   /**
    * 配列やオブジェクトで動的なクラスを指定
@@ -103,6 +120,9 @@ function ReactBasic() {
       <h2 className="text-3xl mt-10">v-ifの代わり</h2>
       {isActive && <p>v-ifの代わり</p>}
       <p style={{ display: isShow ? "initial" : "none" }}>v-showの代わり</p>
+
+      <h2 className="text-3xl mt-10">条件つきレンダリング</h2>
+      {isLogind === false ? UserGreeting() : GuestGreeting() }
 
       <h2 className="text-3xl mt-10">フォームの双方向バインディング</h2>
       <p>双方向バインディング:{name}</p>
