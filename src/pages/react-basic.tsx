@@ -51,10 +51,34 @@ function ReactBasic() {
   const handleClick = () => setCount(counter + 1);
 
   /**
+   * ラジオボタン
+   */
+  const refRadioButtons = React.createRef<HTMLInputElement>();
+  const [radio, setRadio] = React.useState<string>("");
+
+  const handleInputRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRadio(event.target.value);
+  };
+
+  const radioButtons = {
+    radio: [
+      { cd: "red", name: "赤" },
+      { cd: "blue", name: "青" },
+      { cd: "green", name: "緑" },
+    ],
+  };
+
+  const radioClass = classNames({
+    "btn-style": true,
+    // "is-checked": radio
+  });
+
+  /**
    * フォームの双方向バインディング(useStateを使用したステート管理)
    */
   const [name, setName] = React.useState("");
-  const handleInput = (e: any) => setName(e.target.value);
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setName(e.target.value);
 
   /**
    * コンポーネントメソッド(methods)
@@ -122,7 +146,7 @@ function ReactBasic() {
       <p style={{ display: isShow ? "initial" : "none" }}>v-showの代わり</p>
 
       <h2 className="text-3xl mt-10">条件つきレンダリング</h2>
-      {isLogind === false ? UserGreeting() : GuestGreeting() }
+      {isLogind === false ? UserGreeting() : GuestGreeting()}
 
       <h2 className="text-3xl mt-10">フォームの双方向バインディング</h2>
       <p>双方向バインディング:{name}</p>
@@ -132,6 +156,25 @@ function ReactBasic() {
         onChange={handleInput}
         value={name}
       />
+
+      <h2 className="text-3xl">フォームモジュール</h2>
+      <h3>radio</h3>
+      <p>{radio}</p>
+
+      {radioButtons.radio.map((btn) => (
+        <label key={btn.name} className={radioClass}>
+          {btn.name}
+          <input
+            onChange={handleInputRadio}
+            ref={refRadioButtons}
+            type="radio"
+            name="radio"
+            id={btn.cd}
+            checked={radio === btn.name}
+            value={btn.name}
+          />
+        </label>
+      ))}
 
       <h2 className="text-3xl mt-10">ref</h2>
       <p ref={refTarget1}>ref1</p>

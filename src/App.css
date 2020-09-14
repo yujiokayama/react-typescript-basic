@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.btn-style {
+  display: block;
+  color: black;
+}
+
+.is-checked {
+  background-color: blue;
+}
+
