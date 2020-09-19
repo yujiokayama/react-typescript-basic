@@ -68,11 +68,6 @@ function ReactBasic() {
     ],
   };
 
-  const radioClass = classNames({
-    "btn-style": true,
-    // "is-checked": radio
-  });
-
   /**
    * フォームの双方向バインディング(useStateを使用したステート管理)
    */
@@ -159,10 +154,13 @@ function ReactBasic() {
 
       <h2 className="text-3xl">フォームモジュール</h2>
       <h3>radio</h3>
-      <p>{radio}</p>
-
       {radioButtons.radio.map((btn) => (
-        <label key={btn.name} className={radioClass}>
+        <label
+          key={btn.name}
+          className={
+            "btn-style " + `${radio === btn.name ? "btn-checked" : ""}`
+          }
+        >
           {btn.name}
           <input
             onChange={handleInputRadio}
