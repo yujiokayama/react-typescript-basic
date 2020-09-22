@@ -11,8 +11,14 @@ const TestHooks: React.FC = () => {
   /**
    * UseEffect
    */
+
+  console.log('created')
   useEffect(() => {
-    console.log(refDivElement.current);
+    console.log("mounted時、カウンターが更新されるたび実行される");
+  }, [counter]);
+
+  useEffect(() => {
+    console.log("mounted時に一度");
   }, []);
 
   /**
@@ -22,7 +28,7 @@ const TestHooks: React.FC = () => {
   const refDivElement = React.createRef<HTMLDivElement>();
 
   return (
-    <ThemeProvider>
+    <>
       <h1 className="text-4xl">React Hooksのテスト</h1>
 
       <h2 className="text-2xl mt-5 mb-2">useEffect</h2>
@@ -36,9 +42,7 @@ const TestHooks: React.FC = () => {
         カウントアップ
       </button>
       {counter}
-
-      <h2 className="text-2xl mt-5 mb-2">Context</h2>
-    </ThemeProvider>
+    </>
   );
 };
 
