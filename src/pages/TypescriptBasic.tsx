@@ -16,10 +16,15 @@ const TypeScriptBasic: React.FC = () => {
     bar: S;
   };
 
+  type Hoge<T, S> = {
+    obj: T;
+    array: S;
+  }
+
   /**
    * interface
    */
-  interface Hoge<T, S> {
+  interface Bar<T, S> {
     obj: T;
     array: S;
   }
