@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ThemeProvider } from "../context/TestContext";
 
 const TestHooks: React.FC = () => {
+
   /**
    * UseState
    */
@@ -13,8 +14,9 @@ const TestHooks: React.FC = () => {
    */
 
   console.log('created')
+
   useEffect(() => {
-    console.log("mounted時、カウンターが更新されるたび実行される");
+    console.log(`${counter}mounted時、カウンターが更新されるたび実行される`)
   }, [counter]);
 
   useEffect(() => {
@@ -22,17 +24,19 @@ const TestHooks: React.FC = () => {
   }, []);
 
   /**
-   * ref
+   * useRef
    */
-
-  const refDivElement = React.createRef<HTMLDivElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const checkRefValue = () => {
+    console.log(inputRef.current?.value)
+  }
 
   return (
     <>
       <h1 className="text-4xl">React Hooksのテスト</h1>
 
-      <h2 className="text-2xl mt-5 mb-2">useEffect</h2>
-      <div ref={refDivElement}>ref1</div>
+      <h2>useRef</h2>
+      <input type="text" ref={inputRef} onChange={checkRefValue} />
 
       <h2 className="text-2xl mt-5 mb-2">useState</h2>
       <button

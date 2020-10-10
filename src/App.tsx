@@ -6,15 +6,15 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { ThemeProvider } from "./context/TestContext";
 import ThemeSwitchButton from "./components/ThemeSwitchButton";
 
-import Top from "./pages/top";
-import User from "./pages/user";
-import TypeScriptBasic from "./pages/typescript-basic";
-import ReactBasic from "./pages/react-basic";
-import TestCrud from "./pages/test-crud";
-import TestHooks from "./pages/test-hooks";
+import Top from "./pages/Top";
+import User from "./pages/User";
+import TypeScriptBasic from "./pages/TypescriptBasic";
+import ReactBasic from "./pages/ReactBasic";
+import TestCrud from "./pages/TestCrud";
+import TestHooks from "./pages/TestHooks";
 
 function App() {
-  function randumNum(min: number, max: number): number {
+  function randomNum(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
@@ -33,7 +33,7 @@ function App() {
                 <li className="mr-6">
                   <Link
                     className="text-blue-500 hover:text-blue-800"
-                    to={`/user/${randumNum(1, 10)}`}
+                    to={`/user/${randomNum(1, 10)}`}
                   >
                     動的ルーティングのテスト
                   </Link>
@@ -51,7 +51,7 @@ function App() {
                     className="text-blue-500 hover:text-blue-800"
                     to={`/typescript-basic`}
                   >
-                    TyepScriptの基本
+                    TypeScriptの基本
                   </Link>
                 </li>
                 <li className="mr-6">
