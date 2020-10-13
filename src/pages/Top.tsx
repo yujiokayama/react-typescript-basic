@@ -7,12 +7,7 @@ const Top: React.FC = () => {
 
   return (
     <div>
-      <h1>Top</h1>
-      <button
-        onClick={() => {
-          testFunc("こんにちは");
-        }}
-      ></button>
+      <h1>Top Page</h1>
     </div>
   );
 };
