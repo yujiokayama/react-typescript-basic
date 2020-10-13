@@ -6,6 +6,8 @@ const TypeScriptBasic: React.FC = () => {
   /**
    * typeとinterface
    * typeを使おうね
+   * 違いは？
+   * https://qiita.com/tkrkt/items/d01b96363e58a7df830e
    */
 
   /**
