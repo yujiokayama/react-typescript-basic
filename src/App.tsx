@@ -8,7 +8,6 @@ import ThemeSwitchButton from "./components/ThemeSwitchButton";
 
 import Top from "./pages/Top";
 import User from "./pages/User";
-import TypeScriptBasic from "./pages/TypescriptBasic";
 import ReactBasic from "./pages/ReactBasic";
 import TestCrud from "./pages/TestCrud";
 import TestHooks from "./pages/TestHooks";
@@ -49,14 +48,6 @@ function App() {
                 <li className="mr-6">
                   <Link
                     className="text-blue-500 hover:text-blue-800"
-                    to={`/typescript-basic`}
-                  >
-                    TypeScriptの基本
-                  </Link>
-                </li>
-                <li className="mr-6">
-                  <Link
-                    className="text-blue-500 hover:text-blue-800"
                     to={`/test-crud`}
                   >
                     REST APIをCRUD操作する
@@ -78,7 +69,6 @@ function App() {
             <Route path="/" exact children={<Top />} />
             <Route path="/user/:id" children={<User />} />
             <Route path="/react-basic" children={<ReactBasic />} />
-            <Route path="/typescript-basic" children={<TypeScriptBasic />} />
             <Route path="/test-crud" children={<TestCrud />} />
             <Route path="/test-hooks" children={<TestHooks />} />
           </Switch>
